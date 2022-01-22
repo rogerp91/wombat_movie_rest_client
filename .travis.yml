@@ -3,9 +3,9 @@ jdk: oraclejdk11
 dist: trusty
 env:
   global:
-    - ANDROID_API_LEVEL=30
+    - ANDROID_API_LEVEL=32
     - EMULATOR_API_LEVEL=24
-    - ANDROID_BUILD_TOOLS_VERSION=30.0.2
+    - ANDROID_BUILD_TOOLS_VERSION=32
     - ANDROID_ABI=armeabi-v7a # x86 requires HAXM and it's not supported by travis (https://github.com/travis-ci/travis-ci/issues/1419)
     - ADB_INSTALL_TIMEOUT=8 # in minutes (2 minutes by default)
 before_cache:
@@ -20,7 +20,7 @@ android:
   components:
     - tools
     - platform-tools
-    - build-tools-30.0.2
+    - build-tools-32
     - extra-android-m2repository
     - $ANDROID_TARGET
     - sys-img-${ANDROID_ABI}-${ANDROID_TARGET}
