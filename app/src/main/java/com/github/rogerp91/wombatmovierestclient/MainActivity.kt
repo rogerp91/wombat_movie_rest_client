@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import com.github.rogerp91.wombatmovierestclient.client.services.movie.discover.DiscoverClient
 import com.github.rogerp91.wombatmovierestclient.client.services.movie.id.MoviesForIdClient
+import com.github.rogerp91.wombatmovierestclient.client.services.movie.multiple.DiscoverPopularTopClient
 import com.github.rogerp91.wombatmovierestclient.client.services.movie.popular.PopularClient
 import com.github.rogerp91.wombatmovierestclient.client.services.utils.NetworkResult
 import com.github.rogerp91.wombatmovierestclient.client.services.movie.top_rated.MovieTopRatedClient
@@ -27,6 +28,9 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var moviesForIdClient: MoviesForIdClient
+
+    @Inject
+    lateinit var discoverPopularTopClient: DiscoverPopularTopClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         /**
-         *
+         * getForId
          */
         GlobalScope.launch {
             when (moviesForIdClient.getForId("157336")) {
@@ -96,6 +100,23 @@ class MainActivity : AppCompatActivity() {
                 }
                 is NetworkResult.Failure -> {
                     Log.d("getForId", "3")
+                }
+            }
+        }
+
+        /**
+         *
+         */
+        GlobalScope.launch {
+            when (discoverPopularTopClient.getDiscoverPopularTop()) {
+                is NetworkResult.Success -> {
+                    Log.d("getDiscoverPopularTop", "1")
+                }
+                is NetworkResult.Error -> {
+                    Log.d("getDiscoverPopularTop", "2")
+                }
+                is NetworkResult.Failure -> {
+                    Log.d("getDiscoverPopularTop", "3")
                 }
             }
         }
