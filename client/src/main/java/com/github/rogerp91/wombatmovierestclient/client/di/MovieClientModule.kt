@@ -5,6 +5,8 @@ import com.github.rogerp91.wombatmovierestclient.client.services.movie.discover.
 import com.github.rogerp91.wombatmovierestclient.client.services.movie.discover.DiscoverClientDefault
 import com.github.rogerp91.wombatmovierestclient.client.services.movie.id.MoviesForIdClient
 import com.github.rogerp91.wombatmovierestclient.client.services.movie.id.MoviesForIdClientDefault
+import com.github.rogerp91.wombatmovierestclient.client.services.movie.multiple.DiscoverPopularTopClient
+import com.github.rogerp91.wombatmovierestclient.client.services.movie.multiple.DiscoverPopularTopDefault
 import com.github.rogerp91.wombatmovierestclient.client.services.movie.popular.PopularClient
 import com.github.rogerp91.wombatmovierestclient.client.services.movie.popular.PopularClientDefault
 import com.github.rogerp91.wombatmovierestclient.client.services.movie.top_rated.MovieTopRatedClient
@@ -54,5 +56,14 @@ object MovieClientModule {
         interpreter: TopRateInterpreter
     ): MoviesForIdClient {
         return MoviesForIdClientDefault(services, interpreter)
+    }
+
+    @Singleton
+    @Provides
+    fun provideDiscoverPopularTopClient(
+        services: MoviesService,
+        interpreter: TopRateInterpreter
+    ): DiscoverPopularTopClient {
+        return DiscoverPopularTopDefault(services, interpreter)
     }
 }
