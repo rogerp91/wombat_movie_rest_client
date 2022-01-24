@@ -1,4 +1,4 @@
-package com.github.rogerp91.wombatmovierestclient.client.services.top_rated
+package com.github.rogerp91.wombatmovierestclient.client.services.utils
 
 import com.github.rogerp91.wombatmovierestclient.client.Constants.URL_W500_IMAGE
 import com.github.rogerp91.wombatmovierestclient.client.model.DataDTO

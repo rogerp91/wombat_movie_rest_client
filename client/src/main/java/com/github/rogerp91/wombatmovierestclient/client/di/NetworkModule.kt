@@ -1,7 +1,7 @@
 package com.github.rogerp91.wombatmovierestclient.client.di
 
 import com.github.rogerp91.wombatmovierestclient.client.Constants.BASE_URL
-import com.github.rogerp91.wombatmovierestclient.client.services.MoviesService
+import com.github.rogerp91.wombatmovierestclient.client.services.movie.MoviesService
 import com.github.rogerp91.wombatmovierestclient.client.services.interceptor.QueryParametersInterceptor
 import dagger.Module
 import dagger.Provides
