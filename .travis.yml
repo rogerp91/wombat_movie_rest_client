@@ -37,7 +37,6 @@ jobs:
     - stage: client
       script: ./gradlew client:test
       script: ./gradlew client:ktlintFormat
-      script: ./gradlew client:test
       script: ./gradlew client:jacocoTestReportDebug
 script:
   - bundle exec danger
