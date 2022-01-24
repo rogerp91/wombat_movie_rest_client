@@ -38,7 +38,6 @@ jobs:
   include:
     - stage: client
       script: ./gradlew client:ktlintFormat
-      script: ./gradlew client:testDebugUnitTest
 script:
   - bundle exec danger
 after_success:
