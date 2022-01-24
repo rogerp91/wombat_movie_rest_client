@@ -4,11 +4,17 @@ buildscript {
         google()
         mavenCentral()
         maven { url "https://jitpack.io" }
+        gradlePluginPortal()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:$gradleBuildToolsVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$daggerHiltVersion"
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:$ktlintGradleVersion"
+        classpath "org.jacoco:org.jacoco.core:$jacocoVersion"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

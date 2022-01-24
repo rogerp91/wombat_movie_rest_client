@@ -1,7 +1,15 @@
 plugins {
     id "com.android.library"
     id "kotlin-android"
-    id 'maven-publish'
+    id "maven-publish"
+    id "dagger.hilt.android.plugin"
+    id "kotlin-kapt"
+    id "org.jlleitschuh.gradle.ktlint"
+    id "jacoco"
+}
+
+jacoco {
+    toolVersion = "0.8.7"
 }
 
 android {
@@ -21,13 +29,28 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
+
+        debug {
+            testCoverageEnabled true
+        }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
+
     kotlinOptions {
         jvmTarget = "11"
+    }
+
+    testOptions {
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
+        unitTests.returnDefaultValues = true
     }
 }
 
@@ -36,6 +59,45 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp")
     implementation("com.squareup.okhttp3:logging-interceptor")
 
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesAndroidVersion"
+
     implementation "com.squareup.retrofit2:converter-gson:$converterGsonVersion"
+
+    implementation "com.google.dagger:hilt-android:$daggerHiltVersion"
+    kapt "com.google.dagger:hilt-android-compiler:$daggerHiltVersion"
+    kapt "androidx.hilt:hilt-compiler:$hiltCompilerVersion"
+
     testImplementation "junit:junit:$junitVersion"
+    testImplementation "com.google.dagger:hilt-android-testing:$daggerHiltVersion"
+    testAnnotationProcessor "com.google.dagger:hilt-compiler$daggerHiltVersion"
+}
+
+ktlint {
+    debug = true
+    kotlinScriptAdditionalPaths {
+        include fileTree("scripts/")
+    }
+    filter {
+        exclude("**/generated/**")
+        exclude("src/test/**/*.kt")
+        include("**/kotlin/**")
+    }
+}
+
+
+task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
+    reports {
+        html.enabled = true
+        xml.enabled = true
+    }
+    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
+    def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
+    def mainSrc = "${project.projectDir}/src/main/java"
+
+    sourceDirectories.setFrom(files([mainSrc]))
+    classDirectories.setFrom(files([debugTree]))
+    executionData.setFrom(fileTree(dir: "$buildDir", includes: [
+            "jacoco/testDebugUnitTest.exec",
+            "outputs/code-coverage/connected/*coverage.ec"
+    ]))
 }
