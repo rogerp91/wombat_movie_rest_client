@@ -6,8 +6,9 @@ import com.github.rogerp91.wombatmovierestclient.client.services.movie.MoviesSer
 import com.github.rogerp91.wombatmovierestclient.client.services.utils.BaseClient
 import com.github.rogerp91.wombatmovierestclient.client.services.utils.NetworkResult
 import com.github.rogerp91.wombatmovierestclient.client.services.utils.TopRateInterpreter
-import kotlinx.coroutines.*
-import java.lang.Exception
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 interface DiscoverPopularTopClient {
@@ -53,6 +54,5 @@ class DiscoverPopularTopDefault @Inject constructor(
 
         val result = DiscoverPopularTopDTO(listTop, listDiscover, listPopular)
         return NetworkResult.Success(result)
-
     }
 }

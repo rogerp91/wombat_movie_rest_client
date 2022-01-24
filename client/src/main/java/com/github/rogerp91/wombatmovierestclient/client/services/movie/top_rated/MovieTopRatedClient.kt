@@ -1,8 +1,8 @@
 package com.github.rogerp91.wombatmovierestclient.client.services.movie.top_rated
 
 import com.github.rogerp91.wombatmovierestclient.client.model.MovieDTO
-import com.github.rogerp91.wombatmovierestclient.client.services.utils.BaseClient
 import com.github.rogerp91.wombatmovierestclient.client.services.movie.MoviesService
+import com.github.rogerp91.wombatmovierestclient.client.services.utils.BaseClient
 import com.github.rogerp91.wombatmovierestclient.client.services.utils.NetworkResult
 import com.github.rogerp91.wombatmovierestclient.client.services.utils.TopRateInterpreter
 import javax.inject.Inject
