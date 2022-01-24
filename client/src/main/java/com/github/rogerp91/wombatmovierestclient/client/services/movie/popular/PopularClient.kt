@@ -21,7 +21,6 @@ class PopularClientDefault @Inject constructor(
         var listMovie: List<MovieDTO> = emptyList()
         val result = safeApiCall { services.getTopRated() }
 
-
         if (result is NetworkResult.Success) {
             listMovie = interpreter.interpret(result.data)
         }
