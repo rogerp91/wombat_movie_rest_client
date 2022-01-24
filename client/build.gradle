@@ -6,6 +6,7 @@ plugins {
     id "kotlin-kapt"
     id "org.jlleitschuh.gradle.ktlint"
     id "jacoco"
+    id "maven-publish"
 }
 
 jacoco {
@@ -102,4 +103,17 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'crea
             "jacoco/testDebugUnitTest.exec",
             "outputs/code-coverage/connected/*coverage.ec"
     ]))
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = "com.github.rogerp91.wombatmovierestclient.client"
+                artifactId = "client"
+                version = "0.0.1"
+            }
+        }
+    }
 }
