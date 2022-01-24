@@ -37,9 +37,8 @@ before_script:
 jobs:
   include:
     - stage: client
-      script: ./gradlew client:test
       script: ./gradlew client:ktlintFormat
-      script: ./gradlew client:jacocoTestReportDebug
+      script: ./gradlew client:testDebugUnitTest
 script:
   - bundle exec danger
 after_success:

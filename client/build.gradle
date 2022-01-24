@@ -5,7 +5,11 @@ plugins {
     id "dagger.hilt.android.plugin"
     id "kotlin-kapt"
     id "org.jlleitschuh.gradle.ktlint"
-    id "com.vanniktech.android.junit.jacoco"
+    id "jacoco"
+}
+
+jacoco {
+    toolVersion = "0.8.7"
 }
 
 android {
@@ -27,15 +31,26 @@ android {
         }
 
         debug {
-            minifyEnabled false
+            testCoverageEnabled true
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
+
     kotlinOptions {
         jvmTarget = "11"
+    }
+
+    testOptions {
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
+        unitTests.returnDefaultValues = true
     }
 }
 
@@ -69,10 +84,20 @@ ktlint {
     }
 }
 
-junitJacoco {
-    jacocoVersion = "0.8.7"
-    ignoreProjects = [] // type String array
-    excludes // type String List
-    includeNoLocationClasses = false // type boolean
-    includeInstrumentationCoverageInMergedReport = false // type boolean
+
+task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
+    reports {
+        html.enabled = true
+        xml.enabled = true
+    }
+    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
+    def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
+    def mainSrc = "${project.projectDir}/src/main/java"
+
+    sourceDirectories.setFrom(files([mainSrc]))
+    classDirectories.setFrom(files([debugTree]))
+    executionData.setFrom(fileTree(dir: "$buildDir", includes: [
+            "jacoco/testDebugUnitTest.exec",
+            "outputs/code-coverage/connected/*coverage.ec"
+    ]))
 }
