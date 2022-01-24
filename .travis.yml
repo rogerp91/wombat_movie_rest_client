@@ -38,7 +38,7 @@ jobs:
       script: ./gradlew client:test
       script: ./gradlew client:ktlintFormat
       script: ./gradlew client:test
-      script: ./gradlew client:jacocoTestReport
+      script: ./gradlew client:jacocoTestReportDebug
 script:
   - bundle exec danger
 after_success:
