@@ -1,7 +1,11 @@
 plugins {
     id "com.android.library"
     id "kotlin-android"
-    id 'maven-publish'
+    id "maven-publish"
+    id "dagger.hilt.android.plugin"
+    id "kotlin-kapt"
+    id "org.jlleitschuh.gradle.ktlint"
+    id "com.vanniktech.android.junit.jacoco"
 }
 
 android {
@@ -36,6 +40,35 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp")
     implementation("com.squareup.okhttp3:logging-interceptor")
 
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesAndroidVersion"
+
     implementation "com.squareup.retrofit2:converter-gson:$converterGsonVersion"
+
+    implementation "com.google.dagger:hilt-android:$daggerHiltVersion"
+    kapt "com.google.dagger:hilt-android-compiler:$daggerHiltVersion"
+    kapt "androidx.hilt:hilt-compiler:$hiltCompilerVersion"
+
     testImplementation "junit:junit:$junitVersion"
+    testImplementation "com.google.dagger:hilt-android-testing:$daggerHiltVersion"
+    testAnnotationProcessor "com.google.dagger:hilt-compiler$daggerHiltVersion"
+}
+
+ktlint {
+    debug = true
+    kotlinScriptAdditionalPaths {
+        include fileTree("scripts/")
+    }
+    filter {
+        exclude("**/generated/**")
+        exclude("src/test/**/*.kt")
+        include("**/kotlin/**")
+    }
+}
+
+junitJacoco {
+    jacocoVersion = "0.8.7"
+    ignoreProjects = [] // type String array
+    excludes // type String List
+    includeNoLocationClasses = false // type boolean
+    includeInstrumentationCoverageInMergedReport = false // type boolean
 }
