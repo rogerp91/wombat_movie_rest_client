@@ -15,5 +15,6 @@ data class MovieDTO(
     val video: Boolean,
     val voteAverage: Double,
     val voteCount: Int,
-    val url: String
+    val backdropUrl: String,
+    val posterUrl: String
 )

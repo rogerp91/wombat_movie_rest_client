@@ -29,7 +29,8 @@ class TopRateInterpreterDefault : TopRateInterpreter {
                 it.video,
                 it.voteAverage,
                 it.voteCount,
-                URL_W500_IMAGE + it.backdropPath
+                URL_W500_IMAGE + it.backdropPath,
+                URL_W500_IMAGE + it.posterPath
             )
             result.add(movies)
         }
